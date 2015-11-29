@@ -1,0 +1,19 @@
+#!/bin/sh
+# only deploy when on the master
+# add this file to .git/hooks in your repo
+
+# add your preferred cloud storage account
+dest="Dropbox"
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "master" == "$branch" ]; then
+	echo "Deploying to $dest"
+	unset GIT_INDEX_FILE
+	# change this to your cloud storage location
+	export GIT_WORK_TREE=C:/Operations/Dropbox
+	# change this to your repo
+	export GIT_DIR=C:/Users/janjoris/Documents/Git/Operations/.git/
+	git checkout -f
+else
+	echo "Not on master, deploy to $dest cancelled"
+fi
